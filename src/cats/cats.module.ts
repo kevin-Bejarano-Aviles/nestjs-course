@@ -7,7 +7,7 @@ import { BreedsModule } from 'src/breeds/breeds.module';
 import { BreedsService } from 'src/breeds/breeds.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Cat,BreedsModule])],
+  imports: [TypeOrmModule.forFeature([Cat]),BreedsModule],
   controllers: [CatsController],
   providers: [CatsService,BreedsService]
 })

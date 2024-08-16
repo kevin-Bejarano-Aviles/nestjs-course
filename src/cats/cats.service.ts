@@ -17,13 +17,15 @@ export class CatsService {
   ){}
 
   async create(createCatDto: CreateCatDto) {
+    if(createCatDto.breed){
+      const breed = await this.breedRepository.findOneBy({
+        name: createCatDto.breed
+      });
+  
+      if(!breed){
+        throw new BadRequestException('Breed not found');
+      }
 
-    const breed = await this.breedRepository.findOneBy({
-      name: createCatDto.breed
-    });
-
-    if(!breed){
-      throw new BadRequestException('Breed not found');
     }
 
 
