@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
@@ -27,7 +27,7 @@ export class AuthService {
     }
  
     async login(loginDto:LoginDto){
-        const user = await this.userService.findOneByEmail(loginDto.email);
+        const user = await this.userService.findByEmailWithPassword(loginDto.email);
 
         if(!user){
             throw new UnauthorizedException("email is wrong");
@@ -49,6 +49,10 @@ export class AuthService {
         };
 
         
+    }
+
+    async profile ({email, role} : {email:string; role:string}) {
+        return await this.userService.findOneByEmail(email); 
     }
 
 

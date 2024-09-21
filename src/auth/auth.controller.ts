@@ -6,8 +6,10 @@ import { AuthGuard } from './guard/auth.guard';
 import { Request } from 'express';
 import { Roles } from './decorators/roles.decorator';
 import { RolesGuard } from './guard/roles.guard';
-import { Role } from './enums/rol.enum';
+import { Role } from '../common/enums/rol.enum';
 import { Auth } from './decorators/auth.decorator';
+import { ActiveUser } from 'src/common/decorators/active-user.decorator';
+import { UserActiveInterface } from 'src/common/interface/user-active.interface';
 
 interface RequestWithUser extends Request {
     user:{
@@ -40,8 +42,8 @@ export class AuthController {
   /*   @Roles(Role.ADMIN)
     @UseGuards(AuthGuard,RolesGuard) */
     //? useGuard == verifica que ese token exista, si el token existe lo deja pasar a la ruta
-    profile(@Req() req: Request & RequestWithUser ){
+    profile(/* @Req() req: Request & RequestWithUser */@ActiveUser() user: UserActiveInterface ){
         //? el & agrega al objeto de la izquierda con lo de la derecha
-        return req.user;
+        return this.authService.profile(user);
     }
 }
