@@ -4,6 +4,10 @@ import { CreateBreedDto } from './dto/create-breed.dto';
 import { UpdateBreedDto } from './dto/update-breed.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { Role } from 'src/common/enums/rol.enum';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+
+@ApiTags("Breeds")
+@ApiBearerAuth()
 @Auth(Role.ADMIN)
 @Controller('breeds')
 export class BreedsController {
